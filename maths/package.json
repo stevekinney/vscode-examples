@@ -1,0 +1,12 @@
+{
+  "name": "debug-example",
+  "version": "1.0.0",
+  "description": "A simple Node project to demonstrate VS Code debugging.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Steve Kinney",
+  "license": "ISC"
+}
