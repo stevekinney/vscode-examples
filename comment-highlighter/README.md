@@ -1,65 +1,100 @@
-# comment-highlighter README
+# Comment Highlighter
 
-This is the README for your extension "comment-highlighter". After writing up a brief description, we recommend including the following sections.
+Let's build a simple extension that finds all of the `FIXME`s in a JavaScript file and then decorates them so that we can see them easily.
 
-## Features
+In `extension.js`, let's add the following:
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+```js
+const vscode = require('vscode');
 
-For example if there is an image subfolder under your extension project workspace:
+// Step A: Define a decoration type
+const decorationType = vscode.window.createTextEditorDecorationType({
+  backgroundColor: 'rgba(255, 0, 0, 0.3)', // semi-transparent red
+});
 
-\!\[feature X\]\(images/feature-x.png\)
+// Step B: Function to find and decorate words
+function decorateWords() {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) return;
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+  const text = editor.document.getText();
+  const regex = /\bFIXME\b/g;
 
-## Requirements
+  const ranges = [...text.matchAll(regex)].map((match) => {
+    const startPos = editor.document.positionAt(match.index);
+    const endPos = editor.document.positionAt(match.index + match[0].length);
+    return new vscode.Range(startPos, endPos);
+  });
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+  editor.setDecorations(decorationType, ranges);
+}
 
-## Extension Settings
+// Step C: Hook the function into editor/document change events
+function subscribeToDocumentChanges(context) {
+  // Re-run whenever text changes
+  vscode.workspace.onDidChangeTextDocument(() => decorateWords(), null, context.subscriptions);
+  // Re-run whenever the active editor changes (switch tabs, etc.)
+  vscode.window.onDidChangeActiveTextEditor(() => decorateWords(), null, context.subscriptions);
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+  // Run at least once on activation
+  decorateWords();
+}
 
-For example:
+// This is your extension’s main activation
+function activate(context) {
+  // Register the decorator logic with events
+  subscribeToDocumentChanges(context);
+}
 
-This extension contributes the following settings:
+// export (so VS Code recognizes these functions)
+module.exports = {
+  activate,
+  deactivate: () => {},
+};
+```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This code:
 
-## Known Issues
+- Creates a decoration style (red-ish background).
+- Looks for `FIXME` in the current document.
+- Calls `setDecorations` so every instance gets lit up like a holiday tree.
+- Subscribes to relevant events to keep decorations current.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Wire Up `package.json`
 
-## Release Notes
+Your `package.json` should have something like this in its `contributes` section or at least these fields to let VS Code know _when_ to activate your extension:
 
-Users appreciate release notes as you update your extension.
+```json
+{
+  "name": "comment-highlighter",
+  "displayName": "comment-highlighter",
+  "description": "It highlights comments.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "activationEvents": ["onLanguage:javascript", "onLanguage:typescript"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.decorateWords",
+        "title": "Decorate Words"
+      }
+    ]
+  }
+  // …More stuff…
+}
+```
 
-### 1.0.0
+- `main` points to `extension.js`.
+- `activationEvents`: Tells Visual Studio Code to spin up your extension on certain triggers, like after startup or when the active editor changes.
 
-Initial release of ...
+Want to highlight more words (like `BUG`, `TODO`, `WTF`, or “the code is on fire”)? Just add more regex checks or combine them into a single fancy regex. For example:
 
-### 1.0.1
+```js
+// Catch FIXME, BUG, or TODO
+const regex = /\b(FIXME|BUG|TODO)\b/g;
+```
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Obviously, you can also add more decoration types for the different types of things you want to decorate.
