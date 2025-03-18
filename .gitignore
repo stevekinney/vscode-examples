@@ -37,3 +37,9 @@ logs
 # Coverage directory
 coverage/
 .nyc_output
+
+# Databases
+*.sqlite
+*.sqlite3
+*.db
+*.db3

@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import * as api from '../api';
 
@@ -104,11 +97,7 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TaskContext.Provider value={value}>
       {loading && (
-        <div 
-          className="sr-only" 
-          role="status" 
-          aria-live="polite"
-        >
+        <div className="sr-only" role="status" aria-live="polite">
           Loading tasks
         </div>
       )}

@@ -40,10 +40,7 @@ export const createTask = async (task: PartialTask): Promise<void> => {
 };
 
 // Update a task
-export const updateTask = async (
-  id: string,
-  task: PartialTask,
-): Promise<void> => {
+export const updateTask = async (id: string, task: PartialTask): Promise<void> => {
   const response = await fetch(`${API_URL}/tasks/${id}`, {
     method: 'PUT',
     headers: {

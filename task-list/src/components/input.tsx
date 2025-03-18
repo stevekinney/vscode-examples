@@ -22,7 +22,8 @@ export const Input = ({
       <div
         className={cn(
           'flex items-center gap-1',
-          required && "after:h-1.5 after:w-1.5 after:rounded-full after:bg-red-600 after:content-['']",
+          required &&
+            "after:h-1.5 after:w-1.5 after:rounded-full after:bg-red-600 after:content-['']",
         )}
       >
         {label}

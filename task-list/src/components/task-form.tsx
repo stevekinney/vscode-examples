@@ -11,12 +11,7 @@ type TaskFormProps = ComponentProps<'form'> & {
   task?: Task;
 };
 
-export const TaskForm = ({
-  task,
-  onSubmit,
-  className,
-  ...props
-}: TaskFormProps) => {
+export const TaskForm = ({ task, onSubmit, className, ...props }: TaskFormProps) => {
   const { createTask, updateTask } = useTasks();
 
   const [title, setTitle] = useState(task?.title || '');
@@ -69,11 +64,7 @@ export const TaskForm = ({
         placeholder="Description…"
       />
 
-      <div
-        aria-label="Form Controls"
-        className="flex justify-end space-x-2"
-        role="group"
-      >
+      <div aria-label="Form Controls" className="flex justify-end space-x-2" role="group">
         <Button type="submit" variant="primary">
           {task ? 'Update Task' : 'Create Task'}
         </Button>

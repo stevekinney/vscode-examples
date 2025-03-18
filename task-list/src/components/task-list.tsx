@@ -17,7 +17,9 @@ export const TaskList = () => {
 
   return (
     <section aria-labelledby="task-list-heading">
-      <h2 id="task-list-heading" className="sr-only">Tasks</h2>
+      <h2 id="task-list-heading" className="sr-only">
+        Tasks
+      </h2>
       <ul className="space-y-4" role="list" aria-label="Task list">
         {tasks.map((task) => (
           <Task key={task.id} {...task} />

@@ -5,11 +5,7 @@ export type ButtonProps = ComponentProps<'button'> & {
   variant?: 'primary' | 'secondary' | 'destructive';
 };
 
-export const Button = ({
-  className,
-  variant = 'secondary',
-  ...props
-}: ButtonProps) => {
+export const Button = ({ className, variant = 'secondary', ...props }: ButtonProps) => {
   return (
     <button
       className={cn(

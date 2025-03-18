@@ -33,16 +33,11 @@ export const Task = (task: TaskItem) => {
             {task.title}
           </h3>
           {task.description && (
-            <p className="text-gray-600 dark:text-gray-400">
-              {task.description}
-            </p>
+            <p className="text-gray-600 dark:text-gray-400">{task.description}</p>
           )}
         </div>
         <div className="flex items-center space-x-2">
-          <Button
-            onClick={toggleEditing}
-            aria-label={`Edit task: ${task.title}`}
-          >
+          <Button onClick={toggleEditing} aria-label={`Edit task: ${task.title}`}>
             {editing ? 'Cancel' : 'Edit'}
           </Button>
           <Button
