@@ -1,0 +1,21 @@
+{
+  "name": "very-cool-colors",
+  "displayName": "very-cool-colors",
+  "description": "A very cool color scheme.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Very Cool Colors",
+        "uiTheme": "vs-dark",
+        "path": "./themes/Very Cool Colors-color-theme.json"
+      }
+    ]
+  }
+}
