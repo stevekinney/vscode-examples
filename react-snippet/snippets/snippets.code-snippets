@@ -1,0 +1,20 @@
+{
+  "React Component": {
+    "prefix": "rcc",
+    "body": [
+			"interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props extends React.ComponentProps<'${1:div}'> {$2}",
+			"",
+      "const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} = ({ ...props }: ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props): React.JSX.Element => {",
+      "  return (",
+      "    <$1 {...props}>",
+      "      $0",
+      "    </$1>",
+      "  );",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};"
+    ],
+    "description": "Creates a React component with the name based on the file name in PascalCase",
+    "scope": "javascript"
+  }
+}
