@@ -34,5 +34,3 @@ Set up a `launch.json`.
 
 - Set a breakpoint on the line containing `res.json(product);` to verify that the correct json is being sent.
 - Set a breakpoint on the line containing `res.status(404).send('Product not found');` to verify that the 404 error is being sent when appropriate.
-
-This example provides a simple Node.js application with a few routes that you can use to practice debugging in VS Code. It demonstrates how to set breakpoints, step through code, and inspect variables.

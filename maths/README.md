@@ -1,3 +1,8 @@
+## `launch.json` for Debugging
+
+A potential `launch.json` might look something like this:
+
+```json
 {
   "version": "0.2.0",
   "configurations": [
@@ -10,3 +15,4 @@
     }
   ]
 }
+```
