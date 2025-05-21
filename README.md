@@ -9,4 +9,4 @@ Each directory contains little toy applications for debugging and running tasks 
 
 ## Install Dependencies
 
-You can install the dependencies in each directory separately or you can use something like `npx recursve-install`.
+You can install the dependencies in each directory separately, or you can use something like `npx recursive-install`.
